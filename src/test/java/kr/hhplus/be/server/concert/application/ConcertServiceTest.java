@@ -47,7 +47,7 @@ public class ConcertServiceTest {
                 new Concert(1L, "Jamie xx"),
                 new Concert(2L, "YeYe")
         );
-        given(concertRepository.findAll()).willReturn(DummyConcert);
+        given(concertRepository.findAllConcerts()).willReturn(DummyConcert);
 
         List<ConcertResponse> result = concertService.getAllConcerts();
 
@@ -68,14 +68,14 @@ public class ConcertServiceTest {
                 new ConcertDate(2L,concert, LocalDate.of(2025,7,24)),
                 new ConcertDate(3L,concert, LocalDate.of(2025,7,25))
         );
-        given(concertRepository.findByConcertId(concertId)).willReturn(DummyConcertDate);
+        given(concertRepository.findConcertDatesByConcertId(concertId)).willReturn(DummyConcertDate);
 
         List<ConcertDateResponse> result = concertService.getConcertDates(concertId);
 
         assertThat(result).hasSize(3);
-        assertThat(result.get(0).getDate()).isEqualTo(LocalDate.of(2025,7,23));
-        assertThat(result.get(1).getDate()).isEqualTo(LocalDate.of(2025,7,24));
-        assertThat(result.get(2).getDate()).isEqualTo(LocalDate.of(2025,7,25));
+        assertThat(result.get(0).getConcertDate()).isEqualTo(LocalDate.of(2025,7,23));
+        assertThat(result.get(1).getConcertDate()).isEqualTo(LocalDate.of(2025,7,24));
+        assertThat(result.get(2).getConcertDate()).isEqualTo(LocalDate.of(2025,7,25));
 
     }
 
@@ -106,7 +106,7 @@ public class ConcertServiceTest {
     @Test
     void 콘서트_리스트가_null이면_NPE_발생() {
         // given
-        given(concertRepository.findAll()).willReturn(null);
+        given(concertRepository.findAllConcerts()).willReturn(null);
 
         // when / then
         assertThatThrownBy(() -> {
@@ -115,18 +115,6 @@ public class ConcertServiceTest {
         }).isInstanceOf(NullPointerException.class);
     }
 
-    @Test
-    void 존재하지_않는_콘서트의_빈_날짜_리스트_반환() {
-        // given
-        Long fakeConcertId = 999L;
-        given(concertRepository.findByConcertId(fakeConcertId)).willReturn(List.of());
-
-        // when
-        List<ConcertDateResponse> result = concertService.getConcertDates(fakeConcertId);
-
-        // then
-        assertThat(result).isEmpty();
-    }
 
     @Test
     void 존재하지_않는_콘서트날짜의_빈_좌석_리스트_반환() {

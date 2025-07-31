@@ -16,7 +16,7 @@ public class UserController {
 
     @PostMapping("/{userId}/charge")
     public void charge(
-            @PathVariable Long userId,
+            @PathVariable("userId") Long userId,
             @RequestBody PointRequest request
     ){
         userUseCase.chargePoint(userId, request.amount());
@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping("/{userId}/use")
     public ResponseEntity<Void> usePoint(
-            @PathVariable Long userId,
+            @PathVariable("userId") Long userId,
             @RequestBody PointRequest request
     ) {
         userUseCase.usePoint(userId, request.amount());

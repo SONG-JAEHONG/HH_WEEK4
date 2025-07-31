@@ -59,25 +59,25 @@ public class ReservationServiceTest {
     @Test
     void 좌석이_예약가능하면_HOLDING으로_변경_예약이_생성() {
         // given
-        Long userId = 1L;
+
         Long concertDateId = 10L;
         Long seatId = 100L;
         Long concertId = 1L;
-        ReservationRequest request = new ReservationRequest(userId, concertDateId, seatId);
+        ReservationRequest request = new ReservationRequest(1L, concertDateId, seatId);
 
         Concert concert = new Concert(concertId,"YeYe");
         ConcertDate concertDate = new ConcertDate(concertDateId,concert, LocalDate.of(2025,7,24) );
         Seat seat = new Seat(seatId, concertDate, 1, SeatStatus.AVAILABLE, LocalDate.now().atStartOfDay());
-        User user = new User(userId, 10000L); // 필요시 생성자 또는 빌더 추가
+        User user = new User(1L, 10000L); // 필요시 생성자 또는 빌더 추가
 
         ConcertDate dummyconcertDate = mock(kr.hhplus.be.server.concert.domain.ConcertDate.class);
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        when(seatRepository.findById(seatId)).thenReturn(Optional.of(seat));
+        when(userRepository.findUserById(1L)).thenReturn(Optional.of(user));
+        when(seatRepository.findSeatById(seatId)).thenReturn(Optional.of(seat));
         when(concertRepository.findConcertDateById(concertDateId)).thenReturn(Optional.of(dummyconcertDate));
 
         // when
-        ReservationResponse response = reservationService.reserve(request, userId);
+        ReservationResponse response = reservationService.reserve(request, 1L);
 
         // then
         assertThat(response.getStatus()).isEqualTo(ReservationStatus.HOLDING.name());

@@ -18,7 +18,7 @@ public class WaitingController {
     }
 
     @GetMapping("/{userId}")
-    public WaitingStatusRespone getPosition(@PathVariable String userID){
+    public WaitingStatusRespone getPosition(@PathVariable("userId") String userID){
         return waitingUseCase.getStatus(userID);
     }
 }

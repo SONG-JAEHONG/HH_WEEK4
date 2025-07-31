@@ -11,6 +11,6 @@ import java.time.LocalDate;
 public class ConcertDateResponse {
 
     private Long id;
-    private LocalDate Date;
+    private LocalDate concertDate;
 
 }

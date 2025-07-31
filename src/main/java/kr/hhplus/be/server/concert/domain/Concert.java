@@ -27,4 +27,9 @@ public class Concert extends BaseTimeEntity {
         this.id = id;
         this.title = title;
     }
+
+    //concertRepositoryAdapter 테스트용
+    public Concert(String testConcert) {
+        super();
+    }
 }

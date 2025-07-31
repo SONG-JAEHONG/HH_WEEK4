@@ -2,7 +2,7 @@ spring:
   application:
     name: hhplus
   profiles:
-    active: local
+    active: test
   datasource:
     name: HangHaePlusDataSource
     type: com.zaxxer.hikari.HikariDataSource
@@ -11,15 +11,25 @@ spring:
       connection-timeout: 10000
       max-lifetime: 60000
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     open-in-view: false
     generate-ddl: false
-    show-sql: false
+    show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
-      hibernate.timezone.default_storage: NORMALIZE_UTC
-      hibernate.jdbc.time_zone: UTC
+      hibernate:
+        format_sql: true
+        timezone.default_storage: NORMALIZE_UTC
+      jdbc.time_zone: UTC
+
+  logging:
+    level:
+    org.hibernate.SQL: DEBUG        # 실행 SQL 출력
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE  # 파라미터 값 바인딩 로그
+    org.springframework.data.jpa.repository.query: DEBUG  # JPA Repository 쿼리 로그
+
 
 ---
 spring.config.activate.on-profile: local, test

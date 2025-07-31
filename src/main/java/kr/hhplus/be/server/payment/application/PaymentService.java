@@ -1,5 +1,7 @@
 package kr.hhplus.be.server.payment.application;
 
+import kr.hhplus.be.server.concert.domain.Seat;
+import kr.hhplus.be.server.concert.port.out.SeatRepository;
 import kr.hhplus.be.server.payment.domain.Payment;
 import kr.hhplus.be.server.payment.domain.PaymentStatus;
 import kr.hhplus.be.server.payment.port.in.PaymentUseCase;
@@ -20,16 +22,26 @@ public class PaymentService implements PaymentUseCase {
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;
     private final ReservationRepository reservationRepository;
+    private final SeatRepository seatRepository;
 
 
     @Override
     public void pay(Long userId, Long reservationId, Long amount) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        User user = userRepository.findUserById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
         user.usePoint(amount);
-        Reservation reservation = reservationRepository.findById(reservationId)
+        Reservation reservation = reservationRepository.findReservationById(reservationId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 예약입니다."));
 
         Payment payment = new Payment(null, amount, user, reservation, PaymentStatus.SUCCESS);
+
+        Seat seat = reservation.getSeat();
+        seat.reserve();
+        seatRepository.save(seat);
+
+        reservation.reserve();
+        reservationRepository.save(reservation);
+
+
         paymentRepository.save(payment);
     }
 }

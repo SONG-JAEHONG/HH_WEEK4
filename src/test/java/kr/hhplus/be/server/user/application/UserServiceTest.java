@@ -31,51 +31,51 @@ public class UserServiceTest {
     @Test
     void 포인트_충전() {
         // given
-        Long userId = 1L;
-        Long amount = 1000L;
-        User user = new User(userId, 500L);
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        Long amount = 1000L;
+        User user = new User(1L, 500L);
+
+        when(userRepository.findUserById(1L)).thenReturn(Optional.of(user));
 
         // when
-        userService.chargePoint(userId, amount);
+        userService.chargePoint(1L, amount);
 
         // then
         assertThat(user.getPoint()).isEqualTo(1500L);
-        verify(userRepository).findById(userId);
+        verify(userRepository).findUserById(1L);
     }
 
     @Test
     void usePoint_success() {
         // given
-        Long userId = 1L;
-        Long amount = 300L;
-        User user = new User(userId, 1000L);
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        Long amount = 300L;
+        User user = new User(1L, 1000L);
+
+        when(userRepository.findUserById(1L)).thenReturn(Optional.of(user));
 
         // when
-        userService.usePoint(userId, amount);
+        userService.usePoint(1L, amount);
 
         // then
         assertEquals(700L, user.getPoint());
-        verify(userRepository).findById(userId);
+        verify(userRepository).findUserById(1L);
     }
 
     @Test
     void usePoint_insufficient() {
         // given
-        Long userId = 1L;
-        Long amount = 1000L;
-        User user = new User(userId, 500L);
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        Long amount = 1000L;
+        User user = new User(1L, 500L);
+
+        when(userRepository.findUserById(1L)).thenReturn(Optional.of(user));
 
         // when & then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> userService.usePoint(userId, amount));
+                () -> userService.usePoint(1L, amount));
 
         assertEquals("포인트가 부족합니다.", exception.getMessage());
-        verify(userRepository).findById(userId);
+        verify(userRepository).findUserById(1L);
     }
 }

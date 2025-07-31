@@ -3,6 +3,7 @@ package kr.hhplus.be.server.concert.application;
 import kr.hhplus.be.server.concert.domain.Seat;
 import kr.hhplus.be.server.concert.domain.SeatStatus;
 import kr.hhplus.be.server.concert.port.out.SeatRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Component
 public class SeatHoldingScheduler {
 
+    @Autowired
     private SeatRepository seatRepository;
 
     @Scheduled(fixedRate =  60000)

@@ -11,8 +11,10 @@ import java.util.Optional;
 
 public interface ConcertRepository {
 
-    List<Concert> findAll();
-    List<ConcertDate> findByConcertId(Long concertId);
+    List<Concert> findAllConcerts();
+    List<ConcertDate> findConcertDatesByConcertId(Long concertId);
     List<Seat> findAvailableSeatsByConcertDateId(Long concertDateId, SeatStatus status);
     Optional<ConcertDate> findConcertDateById(Long concertDateId);
+
+
 }

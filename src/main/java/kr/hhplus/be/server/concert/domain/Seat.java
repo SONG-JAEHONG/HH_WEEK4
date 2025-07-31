@@ -28,14 +28,39 @@ public class Seat extends BaseTimeEntity {
 
     private LocalDateTime expireTime;
 
+    // concertRepositoryAdapter 테스트용
+    public Seat(ConcertDate concertDate, int seatNumber, SeatStatus seatStatus) {
 
-     public Seat(Long id, ConcertDate concertDate, int seatNumber, SeatStatus seatStatus, LocalDateTime expireTime) {
-        this.id = id;
         this.concertDate = concertDate;
         this.seatNumber = seatNumber;
         this.status = seatStatus;
-        this.expireTime = expireTime;
-     }
+    }
+
+    // concertService 테스트용
+    public Seat(long l, ConcertDate concertDate, int i, SeatStatus seatStatus, LocalDateTime localDateTime) {
+
+        this.id = l;
+        this.concertDate = concertDate;
+        this.seatNumber = i;
+        this.status = seatStatus;
+        this.expireTime = localDateTime;
+    }
+
+    // concertIntegration 테스트용
+    public Seat(ConcertDate concertDate, int i, SeatStatus seatStatus, Object o) {
+
+        this.concertDate = concertDate;
+        this.seatNumber = i;
+        this.status = seatStatus;
+        // expireTime이 Object로 되어있는데, 필요하다면 적절한 타입으로 변환하거나 할당하세요.
+        if (o instanceof LocalDateTime) {
+            this.expireTime = (LocalDateTime) o;
+        } else {
+            this.expireTime = null; // 필요에 따라 기본값 지정
+        }
+    }
+
+
 
     public void hold() {
         if (!isAvailable()) {
@@ -57,7 +82,6 @@ public class Seat extends BaseTimeEntity {
     }
 
 
-
     public void release() {
 
          if(this.status != SeatStatus.HOLDING){
@@ -65,6 +89,8 @@ public class Seat extends BaseTimeEntity {
          }
          this.status = SeatStatus.AVAILABLE;
          this.expireTime = null;
+
+
     }
 
 }

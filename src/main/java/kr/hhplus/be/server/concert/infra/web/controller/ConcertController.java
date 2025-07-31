@@ -28,12 +28,12 @@ public class ConcertController {
     }
 
     @GetMapping("/{concertId}/dates")
-    public List<ConcertDateResponse> getConcertDates(@PathVariable Long concertId){
+    public List<ConcertDateResponse> getConcertDates(@PathVariable("concertId") Long concertId){
         return concertUseCase.getConcertDates(concertId);
     }
 
     @GetMapping("/{concertDateId}/seats")
-    public List<SeatResponse> getSeats(@PathVariable Long concertDateId){
+    public List<SeatResponse> getSeats(@PathVariable("concertDateId") Long concertDateId){
         return concertUseCase.getSeats(concertDateId);
     }
 

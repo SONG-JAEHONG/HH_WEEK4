@@ -46,5 +46,12 @@ public class Reservation extends BaseTimeEntity {
         return reservation;
     }
 
+    public void reserve() {
+        if (this.status != ReservationStatus.HOLDING) {
+            throw new IllegalStateException("예약 상태가 HOLDING 상태여야 합니다.");
+        }
+        this.status = ReservationStatus.RESERVED;
+    }
+
 
 }
