@@ -28,14 +28,11 @@ public class Seat extends BaseTimeEntity {
 
     private LocalDateTime expireTime;
 
+    //concertRepositoryAdapter 테스트용
+    public Seat(ConcertDate concertDate, String a1, SeatStatus seatStatus) {
+        super();
+    }
 
-     public Seat(Long id, ConcertDate concertDate, int seatNumber, SeatStatus seatStatus, LocalDateTime expireTime) {
-        this.id = id;
-        this.concertDate = concertDate;
-        this.seatNumber = seatNumber;
-        this.status = seatStatus;
-        this.expireTime = expireTime;
-     }
 
     public void hold() {
         if (!isAvailable()) {

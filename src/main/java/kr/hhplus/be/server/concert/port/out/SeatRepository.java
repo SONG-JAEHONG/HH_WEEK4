@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface SeatRepository {
 
-    Optional<Seat> findById(Long id);
+    Optional<Seat> findSeatById(Long id);
     void save(Seat seat);
     List<Seat> findByStatusAndBeforeExpire(SeatStatus status, LocalDateTime time);
 

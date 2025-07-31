@@ -22,6 +22,7 @@ public class User extends BaseTimeEntity {
 
 
 
+
     public void chargePoint(long amount){
 
         this.point += amount;
@@ -35,7 +36,8 @@ public class User extends BaseTimeEntity {
         this.point -= amount;
     }
 
-    public User(Long userId, long point) {
+    //UserRepositoryAdapter 테스트용
+    public User(long userId, long point) {
         this.id = userId;
         this.point = point;
     }

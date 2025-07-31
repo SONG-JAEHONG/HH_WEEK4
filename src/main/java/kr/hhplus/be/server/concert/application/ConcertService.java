@@ -22,14 +22,14 @@ public class ConcertService implements ConcertUseCase {
 
     @Override
     public List<ConcertResponse> getAllConcerts(){
-        return concertRepository.findAll().stream()
+        return concertRepository.findAllConcerts().stream()
                 .map(concert -> new ConcertResponse(concert.getId(), concert.getTitle()))
                 .toList();
     }
 
     @Override
     public List<ConcertDateResponse> getConcertDates(Long concertId) {
-        return concertRepository.findByConcertId(concertId).stream()
+        return concertRepository.findConcertDatesByConcertId(concertId).stream()
                 .map(concertDate -> new ConcertDateResponse(concertDate.getId(),concertDate.getConcertDate()))
                 .toList();
     }

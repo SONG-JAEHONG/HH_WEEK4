@@ -27,9 +27,8 @@ public class ConcertDate extends BaseTimeEntity {
     @JoinColumn(name = "concert_id")
     private Concert concert;
 
-    public ConcertDate(Long id, Concert concert, LocalDate concertDate) {
-        this.id = id;
-        this.concert = concert;
-        this.concertDate = concertDate;
+    //concertRepositoryAdapter 테스트용
+    public ConcertDate(Concert concert, LocalDate of) {
+        super();
     }
 }
